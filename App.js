@@ -24,12 +24,12 @@ const MyStack = () => {
       <Stack.Screen
         name="Home"
         component={Home}
-        options={{headerShown: false}}
+        options={{headerShown: false, animation: 'fade'}}
       />
       <Stack.Screen
         name="Details"
         component={FoodDetails}
-        options={{headerShown: false}}
+        options={{headerShown: false, animation: 'fade'}}
       />
     </Stack.Navigator>
   );

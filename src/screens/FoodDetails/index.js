@@ -4,14 +4,58 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Dimensions,
 } from 'react-native';
 import React from 'react';
+import Animated, {
+  AnimatedLayout,
+  FadeIn,
+  FadeInDown,
+  FadeInUp,
+  FadeOut,
+  withTiming,
+} from 'react-native-reanimated';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import styled from 'styled-components/native';
 
 export const FoodDetails = ({navigation, route}) => {
   const {item} = route.params;
+  const {width, height} = Dimensions.get('window');
+
+  const animatedFnDitails = index => {
+    return values => {
+      'worklet';
+
+      const animationValuesX = [-width / 4, 0, width / 4];
+
+      console.log(values);
+      const animations = {
+        opacity: withTiming(1, {duration: 2000}),
+        transform: [
+          {translateX: withTiming(0, {duration: 1500})},
+          {translateY: withTiming(0, {duration: 1300})},
+          {scale: withTiming(1, {duration: 1400})},
+        ],
+      };
+      const initialValues = {
+        opacity: 0,
+        transform: [
+          {translateX: -animationValuesX[index]},
+          {translateY: -90},
+          {scale: 0.4},
+        ],
+      };
+      // const callback = finished => {
+      //   // optional callback that will fire when layout animation ends
+      // };
+      return {
+        initialValues,
+        animations,
+        //callback,
+      };
+    };
+  };
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -42,18 +86,23 @@ export const FoodDetails = ({navigation, route}) => {
               marginTop: 20,
             }}>
             {item.subcategories.map((subcategory, index) => (
-              <View key={`${subcategory.title}-${index + 33}`}>
+              <Animated.View
+                entering={animatedFnDitails(index)}
+                key={`${subcategory.title}-${index + 33}`}>
                 <ImageSubcategory source={subcategory.url} />
-              </View>
+              </Animated.View>
             ))}
           </View>
         </View>
-        <View style={{marginTop: 32}}>
+        <Animated.View
+          entering={FadeInDown.duration(1500)}
+          exiting={FadeOut.duration(1000)}
+          style={{marginTop: 32}}>
           <Text style={{fontSize: 32, fontWeight: '700'}}>${item.price}</Text>
           <Text style={{fontSize: 16, fontWeight: '400'}}>
             {item.description}
           </Text>
-        </View>
+        </Animated.View>
       </Container>
     </SafeAreaView>
   );
@@ -80,6 +129,7 @@ const ImageStyled = styled.Image`
   width: 250px;
   align-self: center;
   resize-mode: contain;
+  z-index: 2;
 `;
 
 const ImageSubcategory = styled.Image`
