@@ -1,20 +1,9 @@
 import React from 'react';
-
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import {SafeAreaView, StyleSheet} from 'react-native';
+import {Home} from './src/screens/Home';
 
 const App = () => {
-  return <SafeAreaView></SafeAreaView>;
+  return <Home />;
 };
-
-const styles = StyleSheet.create({});
 
 export default App;
