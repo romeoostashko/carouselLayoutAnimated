@@ -88,6 +88,21 @@ export const tabs = [
   'Diners',
 ];
 
+const subcategories = [
+  {
+    title: 'Drinks',
+    url: img.lemonjuice,
+  },
+  {
+    title: 'Pizza',
+    url: img.pizzaslice,
+  },
+  {
+    title: 'Hamburger',
+    url: img.hamburger,
+  },
+];
+
 export const popularFood = dataImg.map((item, index) => {
   return {
     ...item,
@@ -95,6 +110,17 @@ export const popularFood = dataImg.map((item, index) => {
     price: +`${+index * 3}` + 23,
     description: 'lorem ipsum dolor sit amet, consectetur',
     color: `#${index * 2}66`,
-    subcategories: dataImg,
+    subcategories: subcategories,
+  };
+});
+
+export const food = dataImg.map((item, index) => {
+  return {
+    ...item,
+    key: `${item.title}-${index}`,
+    price: +`${+index * 3}` + 23,
+    description: 'lorem ipsum dolor sit amet, consectetur',
+    color: `#${(index + 6) * 3}65`,
+    subcategories: subcategories,
   };
 });

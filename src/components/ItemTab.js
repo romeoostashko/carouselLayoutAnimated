@@ -29,5 +29,5 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     borderRadius: 12,
   },
-  pillText: {fontWeight: '700', fontSize: 14, lineHeight: 22},
+  pillText: {fontWeight: '700', fontSize: 14, lineHeight: 16},
 });
