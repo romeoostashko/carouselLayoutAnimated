@@ -108,7 +108,7 @@ export const popularFood = dataImg.map((item, index) => {
     ...item,
     key: `${item.title}-${index}`,
     price: +`${+index * 3}` + 23,
-    description: 'lorem ipsum dolor sit amet, consectetur',
+    description: 'Roman Ostash dolor sit amet, consectetur',
     color: `#${index * 2}66`,
     subcategories: subcategories,
   };
@@ -119,7 +119,7 @@ export const food = dataImg.map((item, index) => {
     ...item,
     key: `${item.title}-${index}`,
     price: +`${+index * 3}` + 23,
-    description: 'lorem ipsum dolor sit amet, consectetur',
+    description: 'Roman Ostash dolor sit amet, consectetur',
     color: `#${(index + 6) * 3}65`,
     subcategories: subcategories,
   };

@@ -15,13 +15,16 @@ import Animated, {
   FadeOut,
   withTiming,
 } from 'react-native-reanimated';
-
+import {SharedElement} from 'react-navigation-shared-element';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import styled from 'styled-components/native';
-
-export const FoodDetails = ({navigation, route}) => {
+import {useNavigation} from '@react-navigation/native';
+export const FoodDetails = ({route}) => {
+  const navigation = useNavigation();
   const {item} = route.params;
   const {width, height} = Dimensions.get('window');
+
+  console.log(`item.${item.key}.bg`);
 
   const animatedFnDitails = index => {
     return values => {
@@ -31,11 +34,11 @@ export const FoodDetails = ({navigation, route}) => {
 
       console.log(values);
       const animations = {
-        opacity: withTiming(1, {duration: 2000}),
+        opacity: withTiming(1, {duration: 1500}),
         transform: [
-          {translateX: withTiming(0, {duration: 1500})},
-          {translateY: withTiming(0, {duration: 1300})},
-          {scale: withTiming(1, {duration: 1400})},
+          {translateX: withTiming(0, {duration: 1000})},
+          {translateY: withTiming(0, {duration: 800})},
+          {scale: withTiming(1, {duration: 1000})},
         ],
       };
       const initialValues = {
@@ -59,26 +62,38 @@ export const FoodDetails = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View
-        style={[
-          StyleSheet.absoluteFill,
-          {
-            backgroundColor: item.color,
-          },
-        ]}
-      />
-      <IconWrapper onPress={() => navigation.goBack()}>
+      <SharedElement
+        style={[StyleSheet.absoluteFill]}
+        id={`item.${item.key}.bg`}>
+        <View
+          style={[
+            StyleSheet.absoluteFill,
+            {
+              backgroundColor: item.color,
+            },
+          ]}
+        />
+      </SharedElement>
+      <IconWrapper
+        onPress={() => {
+          navigation.push('Home');
+
+          //
+        }}>
         <AntDesign name="close" size={28} style={{}} color="#333" />
       </IconWrapper>
 
       <Container>
-        <TextWrapper>
-          <Title>{item.title}</Title>
-          <Description>{item.description}</Description>
-        </TextWrapper>
+        <SharedElement id={`item.${item.key}.text`} style={{}}>
+          <Animated.View entering={FadeInUp.duration(1000)}>
+            <Title>{item.title}</Title>
+            <Description>{item.description}</Description>
+          </Animated.View>
+        </SharedElement>
         <View style={{marginTop: 64}}>
-          <ImageStyled source={item.url} />
-
+          <SharedElement id={`item.${item.key}.image`}>
+            <ImageStyled source={item.url} />
+          </SharedElement>
           <View
             style={{
               flexDirection: 'row',
@@ -95,10 +110,13 @@ export const FoodDetails = ({navigation, route}) => {
           </View>
         </View>
         <Animated.View
-          entering={FadeInDown.duration(1500)}
+          entering={FadeInDown.duration(1000)}
           exiting={FadeOut.duration(1000)}
           style={{marginTop: 32}}>
-          <Text style={{fontSize: 32, fontWeight: '700'}}>${item.price}</Text>
+          <SharedElement id={`item.${item.key}.price`}>
+            <Text style={{fontSize: 32, fontWeight: '700'}}>${item.price}</Text>
+          </SharedElement>
+
           <Text style={{fontSize: 16, fontWeight: '400'}}>
             {item.description}
           </Text>

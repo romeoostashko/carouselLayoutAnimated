@@ -1,37 +1,85 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
-
+import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
-
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
+//import {createStackNavigator} from '@react-navigation/stack';
+import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
 import {Home} from './src/screens/Home';
 import {FoodDetails} from './src/screens/FoodDetails';
 
-const Stack = createNativeStackNavigator();
+const Stack = createSharedElementStackNavigator();
 
 const App = () => {
-  return (
-    <NavigationContainer>
-      <MyStack />
-    </NavigationContainer>
-  );
+  return <MyStack />;
 };
+const config = {
+  animation: 'timing',
+  config: {
+    duration: 250,
+  },
+};
+
+const forFade = ({current}) => ({
+  cardStyle: {
+    opacity: current.progress,
+  },
+});
 
 const MyStack = () => {
   return (
-    <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{headerShown: false, animation: 'fade'}}
-      />
-      <Stack.Screen
-        name="Details"
-        component={FoodDetails}
-        options={{headerShown: false, animation: 'fade'}}
-      />
-    </Stack.Navigator>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{
+            headerShown: false,
+            cardStyleInterpolator: forFade,
+            transitionSpec: {open: config, close: config},
+          }}
+        />
+        <Stack.Screen
+          name="Details"
+          component={FoodDetails}
+          options={{
+            headerShown: false,
+            cardStyleInterpolator: forFade,
+            transitionSpec: {open: config, close: config},
+          }}
+          sharedElements={(route, otherRoute, showing) => {
+            const {item} = route.params;
+            return [
+              {
+                id: `item.${item.key}.bg`,
+                animation: 'auto',
+                resize: 'clip',
+
+                align: 'auto',
+              },
+              {
+                id: `item.${item.key}.image`,
+                animation: 'move',
+                resize: 'auto',
+                align: 'auto',
+              },
+
+              {
+                id: `item.${item.key}.text`,
+                animation: 'fade-out',
+                resize: 'stretch',
+                align: 'auto',
+              },
+              {
+                id: `item.${item.key}.price`,
+                animation: 'fade-in',
+                resize: 'stretch',
+                align: 'auto',
+              },
+            ];
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
