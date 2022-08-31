@@ -1,15 +1,6 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Dimensions,
-} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, View, Dimensions} from 'react-native';
 import React from 'react';
 import Animated, {
-  AnimatedLayout,
-  FadeIn,
   FadeInDown,
   FadeInUp,
   FadeOut,
@@ -22,9 +13,9 @@ import {useNavigation} from '@react-navigation/native';
 export const FoodDetails = ({route}) => {
   const navigation = useNavigation();
   const {item} = route.params;
-  const {width, height} = Dimensions.get('window');
+  const {width} = Dimensions.get('window');
 
-  console.log(`item.${item.key}.bg`);
+  //console.log(`item.${item.key}.bg`);
 
   const animatedFnDitails = index => {
     return values => {
@@ -32,7 +23,7 @@ export const FoodDetails = ({route}) => {
 
       const animationValuesX = [-width / 4, 0, width / 4];
 
-      console.log(values);
+      //console.log(values);
       const animations = {
         opacity: withTiming(1, {duration: 1500}),
         transform: [
@@ -49,13 +40,10 @@ export const FoodDetails = ({route}) => {
           {scale: 0.4},
         ],
       };
-      // const callback = finished => {
-      //   // optional callback that will fire when layout animation ends
-      // };
+
       return {
         initialValues,
         animations,
-        //callback,
       };
     };
   };
@@ -70,13 +58,14 @@ export const FoodDetails = ({route}) => {
             StyleSheet.absoluteFill,
             {
               backgroundColor: item.color,
+              zIndex: 990,
             },
           ]}
         />
       </SharedElement>
       <IconWrapper
         onPress={() => {
-          navigation.push('Home');
+          navigation.goBack();
 
           //
         }}>
@@ -87,13 +76,15 @@ export const FoodDetails = ({route}) => {
         <SharedElement id={`item.${item.key}.text`} style={{}}>
           <Animated.View entering={FadeInUp.duration(1000)}>
             <Title>{item.title}</Title>
-            <Description>{item.description}</Description>
+            <Description>{item.subtitle}</Description>
           </Animated.View>
         </SharedElement>
         <View style={{marginTop: 64}}>
-          <SharedElement id={`item.${item.key}.image`}>
-            <ImageStyled source={item.url} />
-          </SharedElement>
+          <Animated.View entering={FadeInUp.duration(1600)}>
+            <SharedElement id={`item.${item.key}.image`}>
+              <ImageStyled source={item.url} />
+            </SharedElement>
+          </Animated.View>
           <View
             style={{
               flexDirection: 'row',
@@ -147,7 +138,6 @@ const ImageStyled = styled.Image`
   width: 250px;
   align-self: center;
   resize-mode: contain;
-  z-index: 2;
 `;
 
 const ImageSubcategory = styled.Image`

@@ -9,7 +9,7 @@ export const ItemFood = ({item}) => {
   return (
     <TouchableOpacityContainer
       activeOpacity={0.9}
-      onPress={() => navigation.push('Details', {item})}>
+      onPress={() => navigation.navigate('Details', {item})}>
       <Container>
         <SharedElement
           style={[StyleSheet.absoluteFill]}
@@ -29,7 +29,7 @@ export const ItemFood = ({item}) => {
           style={{position: 'absolute', top: 10, left: 10}}>
           <TextWrapper>
             <Title>{item.title}</Title>
-            <Description>{item.description}</Description>
+            <Description>{item.subtitle}</Description>
           </TextWrapper>
         </SharedElement>
         <SharedElement

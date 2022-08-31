@@ -108,9 +108,11 @@ export const popularFood = dataImg.map((item, index) => {
     ...item,
     key: `${item.title}-${index}`,
     price: +`${+index * 3}` + 23,
-    description: 'Roman Ostash dolor sit amet, consectetur',
+    description:
+      'Roman Ostash created this animated layout. The animation is implemented using the libraries: react-native-reanimated and react-navigation-shared-element',
     color: `#${index * 2}66`,
     subcategories: subcategories,
+    subtitle: 'Roman Ostash created this layout',
   };
 });
 
@@ -119,7 +121,9 @@ export const food = dataImg.map((item, index) => {
     ...item,
     key: `${item.title}-${index}`,
     price: +`${+index * 3}` + 23,
-    description: 'Roman Ostash dolor sit amet, consectetur',
+    description:
+      'Roman Ostash created this animated layout. The animation is implemented using the libraries: react-native-reanimated and react-navigation-shared-element',
+    subtitle: 'Roman Ostash created this layout',
     color: `#${(index + 6) * 3}65`,
     subcategories: subcategories,
   };

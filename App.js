@@ -15,7 +15,7 @@ const App = () => {
 const config = {
   animation: 'timing',
   config: {
-    duration: 250,
+    duration: 400,
   },
 };
 
@@ -50,6 +50,20 @@ const MyStack = () => {
             const {item} = route.params;
             return [
               {
+                id: `item.${item.key}.text`,
+                animation: 'fade-out',
+                resize: 'auto',
+                align: 'auto',
+              },
+
+              {
+                id: `item.${item.key}.price`,
+                animation: 'fade-in',
+                resize: 'clip',
+                align: 'auto',
+              },
+
+              {
                 id: `item.${item.key}.bg`,
                 animation: 'auto',
                 resize: 'clip',
@@ -59,21 +73,8 @@ const MyStack = () => {
               {
                 id: `item.${item.key}.image`,
                 animation: 'move',
-                resize: 'auto',
-                align: 'auto',
-              },
-
-              {
-                id: `item.${item.key}.text`,
-                animation: 'fade-out',
                 resize: 'stretch',
-                align: 'auto',
-              },
-              {
-                id: `item.${item.key}.price`,
-                animation: 'fade-in',
-                resize: 'stretch',
-                align: 'auto',
+                align: 'center-center',
               },
             ];
           }}
